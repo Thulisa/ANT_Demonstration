@@ -1,0 +1,49 @@
+<project name="Hello World project"  default= "Run_HelloWorld" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <property file="${basedir}/build.properties" />
+
+    <target name="Run_HelloWorld" depends="getDependencies,runJunit">
+        <echo message = "Hello World. "/>
+    </target>
+
+    <target name="getDependencies" description="retrieve the dependencies and more from the build.xml" depends="clean">
+        <ivy:settings url="http://artifactory.cpt.intecbilling.com/ivy/ivysettings.xml"/>
+        <ivy:resolve file="${basedir}/ivy.xml"/>
+        <ivy:retrieve type="jar,bundle" pattern="${basedir}/${lib.folder}/[artifact].[ext]" ivypattern="${basedir}/${lib.folder}/[artifact].[ext]"/>
+    </target>
+
+    <target name="clean" description="delete the lib folder">
+        <delete dir="${basedir}/lib" />
+    </target>
+
+    <target name="compileTests" description=" compiles the test class">
+        <javac srcdir="${basedir}/test" destdir="${basedir}/out/test/HelloWorld_2" includeantruntime="false">
+
+        <classpath>
+            <pathelement location="${basedir}/lib/junit.jar"/>
+            <pathelement location="${basedir}/lib/hamcrest-core.jar"/>
+        </classpath>
+
+        </javac>
+    </target>
+
+
+   <target name="runJunit" depends="compileTests">
+       <junit printsummary="yes" haltonfailure="yes">
+           <classpath>
+               <pathelement location="${basedir}/lib/junit.jar"/>
+               <pathelement location="${basedir}/lib/hamcrest-core.jar"/>
+               <pathelement location="${basedir}/out/test/HelloWorld_2"/>
+           </classpath>
+
+               <formatter type="plain"/>
+               <batchtest>
+                    <fileset dir="${basedir}/test" includes="**/*test*.java"/>
+               </batchtest>
+               <formatter type="xml"/>
+       </junit>
+   </target>
+
+
+
+</project>

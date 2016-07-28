@@ -1,0 +1,17 @@
+<ivy-module version= "2.0">
+        <info organisation = "csgi" module = "testingIvy"/>
+                <dependencies>
+                    <dependency org="junit" name="junit" rev="+"/>
+                </dependencies>
+
+    <!-- https://mvnrepository.com/artifact/com.oracle/ojdbc14 -->
+    <!--<dependency org="com.oracle" name="ojdbc14" rev="10.2.0.4.0"/>
+-->
+    <!-- https://mvnrepository.com/artifact/junit/junit -->
+
+
+
+
+
+
+</ivy-module>
